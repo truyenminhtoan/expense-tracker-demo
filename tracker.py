@@ -40,6 +40,24 @@ class ExpenseTracker:
         """Return the sum of all expense amounts."""
         return sum(e.amount for e in self.expenses)
 
+    def delete_expense(self, index: int) -> Expense:
+        """Remove an expense by its 1-based index.
+
+        Args:
+            index: 1-based position of the expense to remove.
+
+        Returns:
+            The removed Expense.
+
+        Raises:
+            IndexError: If index is out of range.
+        """
+        if index < 1 or index > len(self.expenses):
+            raise IndexError(f"Index {index} out of range.")
+        expense = self.expenses.pop(index - 1)
+        self._save()
+        return expense
+
     def get_total_by_category(self) -> dict[str, float]:
         """Return total spending grouped by category."""
         totals: dict[str, float] = {}

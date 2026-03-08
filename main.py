@@ -19,7 +19,8 @@ def print_menu() -> None:
     print("2. View all expenses")
     print("3. View total spending")
     print("4. View spending by category")
-    print("5. Exit")
+    print("5. Delete expense")
+    print("6. Exit")
     print("======================")
 
 
@@ -85,6 +86,28 @@ def view_total(tracker: ExpenseTracker) -> None:
     print(f"\nTotal spending: ${total:.2f} across {count} expense(s).")
 
 
+def delete_expense(tracker: ExpenseTracker) -> None:
+    """Prompt the user to delete an expense by index.
+
+    Args:
+        tracker: The active ExpenseTracker instance.
+    """
+    expenses = tracker.get_all_expenses()
+    if not expenses:
+        print("No expenses to delete.")
+        return
+
+    view_all_expenses(tracker)
+    try:
+        index = int(input("\nEnter expense number to delete: "))
+        removed = tracker.delete_expense(index)
+        print(f"Deleted: {removed}")
+    except ValueError:
+        print("Invalid number.")
+    except IndexError as e:
+        print(str(e))
+
+
 def view_by_category(tracker: ExpenseTracker) -> None:
     """Display spending broken down by category.
 
@@ -111,13 +134,14 @@ def main() -> None:
         "2": view_all_expenses,
         "3": view_total,
         "4": view_by_category,
+        "5": delete_expense,
     }
 
     while True:
         print_menu()
         choice = input("Choose an option: ").strip()
 
-        if choice == "5":
+        if choice == "6":
             print("Goodbye!")
             break
         elif choice in actions:

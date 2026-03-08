@@ -49,6 +49,20 @@ def test_load_empty_file(tmp_path):
     assert tracker.get_all_expenses() == []
 
 
+def test_delete_expense(tracker):
+    tracker.add_expense(10.0, "Food", "Lunch")
+    tracker.add_expense(5.0, "Transport", "Bus")
+    removed = tracker.delete_expense(1)
+    assert removed.amount == 10.0
+    assert len(tracker.get_all_expenses()) == 1
+
+
+def test_delete_expense_invalid_index(tracker):
+    tracker.add_expense(10.0, "Food", "Lunch")
+    with pytest.raises(IndexError):
+        tracker.delete_expense(99)
+
+
 def test_load_corrupt_file(tmp_path):
     data_file = str(tmp_path / "corrupt.json")
     with open(data_file, "w") as f:

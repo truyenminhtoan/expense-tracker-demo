@@ -35,7 +35,8 @@ python3 main.py
 2. **View all expenses** — table of all recorded expenses
 3. **View total spending** — sum of all expenses
 4. **View spending by category** — breakdown per category
-5. **Exit**
+5. **Delete expense** — remove an expense by its number
+6. **Exit**
 
 ## Running Tests
 
